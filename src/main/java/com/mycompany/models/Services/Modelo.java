@@ -8,17 +8,20 @@ import com.mycompany.models.EnteCorreo;
 import com.mycompany.models.Envio;
 import com.mycompany.models.Persona;
 import com.mycompany.models.repository.Repository;
+import com.mycompany.view.Vista;
+import java.time.LocalTime;
 
 public class Modelo {
 
     private Repository repository;
-    private Documento documento;
+    private Documento documentos;
     private Envio envio;
     private Persona persona;
     private EnteCorreo enteCorreo;
-
+    private Vista vista;
+    
     public Modelo() {
-        this.documento = new Documento();
+        this.documentos = new Documento();
         this.envio = new Envio();
         this.persona = new Persona();
         this.enteCorreo = new EnteCorreo();
@@ -26,7 +29,7 @@ public class Modelo {
     }
 
     public Documento getDocumento() {
-        return documento;
+        return documentos;
     }
 
     public Envio getEnvio() {
@@ -42,7 +45,6 @@ public class Modelo {
     }
 
     public List<Documento> documentoQueIncluyen(String palabra) throws InvalidNameException {
-        Repository repository = new Repository();
         List<Documento> documentos = repository.buscarPorPalabraClave(palabra);
         if (documentos.isEmpty()) {
             throw new InvalidNameException("No se encontraron documentos con la palabra clave proporcionada.");
@@ -59,4 +61,16 @@ public class Modelo {
         //Con count() contamos todos los elementos del stream
         return repository.cantidadEnEsperaConsulta();
        }
-}
+    
+    public boolean guardarEnBD(Documento documento, Persona persona, Envio envio){
+            //Llamamos al repository para guardar los objetos en base de datos
+            if(this.repository.insertarValoresDocumentosBD(documentos,persona,envio)){
+                return true;
+            }
+           return false;
+    }
+    
+    
+    }
+    
+

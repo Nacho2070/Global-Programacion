@@ -23,4 +23,11 @@ public class Envio {
     public boolean isEstado_enviado() {
         return estado_enviado;
     }
+
+    public int getNro_seguimiento() {
+        return nro_seguimiento;
+    }
+
+    
+    
 }

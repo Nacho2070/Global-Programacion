@@ -4,6 +4,7 @@
  */
 package com.mycompany.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,12 +13,11 @@ import java.util.List;
  */
 public class EnteCorreo {
     
-
     private String nombre;
     private String direccion;
     private int telefono;
     private String encargado;
-    private List<Documento> enviado;
+    //private ArrayList<Documento> enviado = new ArrayList<>();
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -33,9 +33,6 @@ public class EnteCorreo {
 
     public void setEncargado(String encargado) {
         this.encargado = encargado;
-    }
-    public void setEnviado(Documento envio) {
-        this.enviado.add(envio);
     }
     
 }

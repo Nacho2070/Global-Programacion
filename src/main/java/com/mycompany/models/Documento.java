@@ -13,11 +13,16 @@ public class Documento {
     private String fecha_creacion;
     private String autor;
     private List<String> palabraClave;
-    private List<Envio> enviado = new ArrayList<>(); // Initialize the list
-
+    private ArrayList<Envio> enviado = new ArrayList<>();
     public  List<EnteCorreo> se_envia;
     private List<Persona> trabaja;
-   
+    
+    public Documento() {
+        this.palabraClave = new ArrayList<>();
+        this.enviado = new ArrayList<>();
+        this.se_envia = new ArrayList<>();
+        this.trabaja = new ArrayList<>();
+    }
 
         public String getDestinatario() {
             return destinatario;

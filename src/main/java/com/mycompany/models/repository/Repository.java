@@ -1,12 +1,15 @@
 package com.mycompany.models.repository;
 
 import com.mycompany.models.Documento;
+import com.mycompany.models.Envio;
+import com.mycompany.models.Persona;
 
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,32 +17,81 @@ import java.util.Optional;
 public class Repository extends Conexion {
 
 
-    public boolean insertarValoresDocumentosBD(Documento documento){
+    public boolean insertarValoresDocumentosBD(Documento documento,Persona persona,Envio envio ){
+        
         Connection conexion = establecerConexion();
 
         try {
-            PreparedStatement ps = conexion.prepareStatement("Insert into Documento (autor,destinatario,fecha_creacion,palabra_clave)values(?,?,?,?)");
+            
+            //Insertar en Empleado
+            try{
+            PreparedStatement psPersona =            
+                    conexion.prepareStatement("Insert into Empleado (nombre,direccion,telefono,fecha_ingreso,cargo)values( ?, ?, ?, ?, ?)");
+            psPersona.setString(1, persona.getNombre());
+            psPersona.setString(2, persona.getDireccion());
+            psPersona.setString(3, persona.getTelefono());            
+
+            Timestamp timestamp = new Timestamp(persona.getFecha_ingreso().getTime());
+            psPersona.setTimestamp(4,timestamp);
+            
+            psPersona.setString(5, persona.getCargo());
+            
+            System.out.println(psPersona);
+
+            int personaResultado = psPersona.executeUpdate();
+            System.out.println(personaResultado);
+            if (personaResultado == 0) {
+                System.out.println("fallo emplea");
+                conexion.rollback();
+                    return false;
+            }
+
+            // Obtener el ID generado para la tabla Persona
+            ResultSet personaKeys = psPersona.getGeneratedKeys();
+            int personaId = 0;
+            if (personaKeys.next()) {
+                personaId = personaKeys.getInt(1);
+            }
+            }catch(RuntimeException e){
+                System.out.println(e);
+            }
+            try{
+            // Insertar en tabla Envio
+            PreparedStatement psEnvio = 
+                    conexion.prepareStatement("Insert into Envio (estado_enviado,nro_seguimiento) VALUES (?,?)");
+            
+            psEnvio.setBoolean(1, envio.isEstado_enviado());
+            psEnvio.setInt(2, envio.getNro_seguimiento());
+            //preba
+            System.out.println(psEnvio);
+            
+            int envioResultado = psEnvio.executeUpdate();
+            if (envioResultado == 0) {
+                System.out.println("fallo envio");
+                conexion.rollback();
+                return false;
+            }
+            }catch(RuntimeException e){System.out.println(e);}
+            //Insertar en Documentos
+            PreparedStatement ps = 
+                    conexion.prepareStatement("Insert into Documento (autor,destinatario,fecha_creacion,palabra_clave,id_empleado)values(?,?,?,?,?)");
             ps.setString(1,  documento.getAutor());
             ps.setString(2,  documento.getDestinatario());
             ps.setString(3,  documento.getFecha_creacion());
-            ps.setString(4,  convertirListaAJson(documento.getPalabra_clave())); // Convertir la lista a JSON
-
+            ps.setString(4,  convertirListaAJson(documento.getPalabra_clave()));
+            ps.setInt(5, 45);
             int resultado = ps.executeUpdate();
+            
             if(resultado >0){
                 System.out.println("biennnnnnn");
                 return true;
             }else{
+                System.out.println("fallo docu");
                 return false;
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error");
-        }finally{
-            try {
-                conexion.close();
-            } catch (Exception e) {
-                System.err.println("error");
-            }
         }
         return false;
     }
@@ -99,13 +151,10 @@ public class Repository extends Conexion {
                 String nombreEmpleado = rs.getString("nombre");
                 int cantidadDocumentos = rs.getInt("cantidad_documentos");
 
-                // Construir el resultado que deseas devolver
                 String resultado = "Empleado más productivo:\n"
                              + "ID Empleado: " + idEmpleado + "\n"
                              + "Nombre: " + nombreEmpleado + "\n"
                              + "Cantidad de documentos: " + cantidadDocumentos;
-
-            // Aquí puedes devolver el resultado o hacer cualquier otro procesamiento necesario
             return resultado;
             } 
              } catch (Exception e) {}

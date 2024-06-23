@@ -1,9 +1,12 @@
 package com.mycompany.controllers;
 
 import com.mycompany.models.Documento;
+import com.mycompany.models.EnteCorreo;
 import com.mycompany.models.Envio;
+import com.mycompany.models.Persona;
 import com.mycompany.models.repository.Repository;
 import com.mycompany.view.Vista;
+
 
 import javax.naming.InvalidNameException;
 import java.awt.event.ActionEvent;
@@ -15,18 +18,16 @@ import java.util.Optional;
 import com.mycompany.models.EnteCorreo;
 import com.mycompany.models.Persona;
 import com.mycompany.models.Services.Modelo;
+import java.time.LocalDate;
 
 public class Controlador implements ActionListener {
     private Vista vista;
     private Modelo modelo;
-    private Repository repository;
-    private Documento documentos;
     
-    public Controlador(Vista vista, Modelo modelo,Repository repository,Documento documento) {
+    public Controlador(Vista vista, Modelo modelo) {
+        
         this.vista = vista;
         this.modelo = modelo;
-        this.repository = repository;
-        this.documentos = new Documento();
         //Buscar boton
         vista.consultarPorPalabraButton.addActionListener( this);
         //Enviar boton
@@ -68,7 +69,7 @@ public class Controlador implements ActionListener {
         try {
             String palabra = vista.palabraClaveTextField.getText(); 
             //Buscamos en base de datos la palabra ingresada
-            List<Documento> resultados = this.modelo.documentoQueIncluyen(palabra);
+            List<Documento> resultados = modelo.documentoQueIncluyen(palabra);
             System.out.println(resultados);
             if (resultados.isEmpty()) {
                 vista.mostrarError("No se encontraron usuarios con ese nombre");
@@ -90,10 +91,11 @@ public class Controlador implements ActionListener {
             // Validamos si no hay campos vacios
             if (!vista.validarCampos()){
                 vista.mostrarError("Error faltan campos por rellenar");
-               // limpiarCajas();
-            }
+                limpiarCajas();
+            } 
             
-            Envio envio = modelo.getEnvio();
+            Documento documentos = modelo.getDocumento();
+            Envio envio = new Envio();
             Persona persona = modelo.getPersona();
             EnteCorreo enteCorreo = modelo.getEnteCorreo();
             
@@ -103,12 +105,14 @@ public class Controlador implements ActionListener {
             //if("Enviado".equals(vista.jComboBox.getSelectedItem())){
               //  envio.setEstado_enviado(true);
             //}
-            envio.setNro_seguimiento(Integer.parseInt(vista.numSegTextField.getText()));
+            envio.setNro_seguimiento(324);
             
             //Guardamos en persona
             persona.setNombre(vista.nombreTextField.getText());
             persona.setTelefono(vista.telefonoTextField.getText());
-            persona.setFecha_ingreso(vista.CargoTextField.getText());
+            
+            persona.setFecha_ingreso(Date.valueOf(LocalDate.MAX));
+            
             persona.setDireccion(vista.dirreccionTextField.getText());
             persona.setCargo(vista.CargoTextField.getText());
             
@@ -117,26 +121,31 @@ public class Controlador implements ActionListener {
             enteCorreo.setDireccion(vista.dirreccionEnteDocField.getText());
             enteCorreo.setTelefono(Integer.parseInt(vista.telefonoEnteField.getText()));
             enteCorreo.setEncargado(vista.EncargadoEnteField.getText());
-            enteCorreo.setEnviado(documentos);
-            
+           
             //Guardamos en documentos
             documentos.setDestinatario(vista.destinatarioField.getText());
             documentos.setAutor(vista.autorField.getText());
             documentos.setFecha_creacion(String.valueOf(LocalTime.now()));
             documentos.setPalabraClave(stringAList(vista.palabrasClavesField.getText()));
+            
             documentos.setEnvio(envio);            
             documentos.setSe_envia(enteCorreo);
             documentos.setTrabaja(persona);
+            
+            //enteCorreo.setEnviado(documentos);
+
             System.out.println(documentos);
             
+
             //Guardamos en base de datos
-            if (this.repository.insertarValoresDocumentosBD(documentos)) {
+            if ( modelo.guardarEnBD(documentos, persona, envio)) {
                 vista.mensajeExito("Usuario guardado en la base de datos");
                 limpiarCajas();
             } else {
                 vista.mostrarError("Ocurrio un error al guardar en base de datos");
             }
         }
+        
         //Metodo cantidad en espera
         if (ae.getSource() == vista.cantidadEnEsperaButton) {
 
@@ -148,11 +157,10 @@ public class Controlador implements ActionListener {
                 vista.mostrarError("No se encontraror documentos en espera");
             }
         }
-        //Metodo Empleado que mas confecciono documentos
+        
+        //Metodo Empleado que mas confeccionó documentos
        if (ae.getSource() == vista.cantidadConfeccButton) {
-            
-              vista.cantdocsConfeccTextArea.setText(repository.autorMasProductivo());
-         
+              vista.cantdocsConfeccTextArea.setText(modelo.autorMasProductivo());
         }
         
         //Metodo para limpiar cajas         
@@ -161,11 +169,7 @@ public class Controlador implements ActionListener {
         }
     
     }
-    private List<String>stringAList(String s){
-        List<String> lst = List.of(s.split(","));
-        System.out.println(lst);
-    return lst;
-    }
+    
     public void limpiarCajas() {
         vista.palabraClaveTextField.setText("");
         vista.telefonoTextField.setText("");
@@ -180,7 +184,11 @@ public class Controlador implements ActionListener {
         vista.cantdocsConfeccTextArea.setText("");
         }
     
-    
+    private List<String>stringAList(String s){
+        List<String> lst = List.of(s.split(","));
+        System.out.println(lst);
+    return lst;
+}
 }
         //Si se presiona el boton limpiar se limpian los campos
         

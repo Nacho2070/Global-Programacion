@@ -15,9 +15,8 @@ public class ParcialProgramacion {
             
         Vista vista = new Vista();
         Modelo modelo = new Modelo();
-        Repository repository = new Repository();
-        Documento documento = new Documento();
-        Controlador controlador = new Controlador(vista, modelo,repository,documento);
+        
+        Controlador controlador = new Controlador(vista, modelo);
 
         controlador.iniciar();
         vista.setVisible(true);
