@@ -62,7 +62,7 @@ public class Repository extends Conexion {
             
             psEnvio.setBoolean(1, envio.isEstado_enviado());
             psEnvio.setInt(2, envio.getNro_seguimiento());
-            //preba
+                    
             System.out.println(psEnvio);
             
             int envioResultado = psEnvio.executeUpdate();
@@ -159,7 +159,7 @@ public class Repository extends Conexion {
             } 
              } catch (Exception e) {}
               
-                return "No se encontraron resultados.";
+                return "No se encontraron resultados";
       }         
              
                
@@ -211,38 +211,4 @@ public class Repository extends Conexion {
         return list;
     }
 }
-     
-     
-
-    /*
-    public boolean insertarValoresPersonaBD(Persona persona){
-        Connection conexion = establece_coneccion();
-
-        try {
-            PreparedStatement ps = conexion.prepareStatement("Insert into Documento (destino,fecha_creacion,autor,destinatario)values(?,?,?,?,?,?)");
-            ps.setString(1, documento.getDestino());
-            ps.setString(2, documento.getFecha_creacion());
-            ps.setString(3, documento.getAutor());
-            ps.setString(4, documento.getDestinatario());
-
-            int resultado =ps.executeUpdate();
-            if(resultado >0){
-                return true;
-            }else{
-                return false;
-            }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error");
-        }finally{
-            try {
-                conexion.close();
-            } catch (Exception e) {
-                System.err.println("error");
-            }
-        }
-        return false;
-    }
-
- */
-
+  
