@@ -44,6 +44,9 @@ public class Controlador implements ActionListener {
         vista.cantidadEnEsperaButtonModal.addActionListener( this);
         //Boton para el empleado que mas confecciono docs
         vista.cantidadConfeccButtonModal.addActionListener(this);        
+        //Boton para buscar por palabras claves
+        buscar.consultarPorPalabraButton.addActionListener(this);
+
         //Salir botones ventanas
         buscar.salirButton.addActionListener(this);
         empMasConfecciono.salirButtonEmpleado.addActionListener(this);
@@ -67,7 +70,7 @@ public class Controlador implements ActionListener {
             String palabra = buscar.palabraClaveTextField.getText();
             List<Documento> resultados = modelo.documentoQueIncluyen(palabra);
             if (resultados.isEmpty()) {
-               // buscar.mostrarError("No se encontraron documentos con esa palabra clave");
+                System.out.println("No se encontraron documentos con esa palabra clave");
                 limpiarCajasBuscar();
             } else {
                 buscar.mostrarDocumentos(resultados);

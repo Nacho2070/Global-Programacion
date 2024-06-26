@@ -9,7 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,59 +20,66 @@ public class Repository extends Conexion {
 
     public boolean insertarValoresDocumentosBD(Documento documento,Persona persona,Envio envio ){
         
+                
         Connection conexion = establecerConexion();
+        
+    try{    
+          conexion.setAutoCommit(false);
 
-        try {
-            
             //Insertar en Empleado
-            try{
-            PreparedStatement psPersona =            
-                    conexion.prepareStatement("Insert into Empleado (nombre,direccion,telefono,fecha_ingreso,cargo)values( ?, ?, ?, ?, ?)");
+            try {
+
+            PreparedStatement psPersona = conexion.prepareStatement(
+                "INSERT INTO Empleados (nombre, direccion, telefono, fecha_ingreso, cargo) VALUES (?, ?, ?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS
+            );
             psPersona.setString(1, persona.getNombre());
             psPersona.setString(2, persona.getDireccion());
-            psPersona.setString(3, persona.getTelefono());            
-
-            Timestamp timestamp = new Timestamp(persona.getFecha_ingreso().getTime());
-            psPersona.setTimestamp(4,timestamp);
-            
+            psPersona.setString(3, persona.getTelefono());
+    
+            // Convertimos Date a String
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaComoCadena = sdf.format(persona.getFecha_ingreso());
+            psPersona.setString(4, fechaComoCadena);
             psPersona.setString(5, persona.getCargo());
-            
+    
             System.out.println(psPersona);
 
             int personaResultado = psPersona.executeUpdate();
             System.out.println(personaResultado);
             if (personaResultado == 0) {
-                System.out.println("fallo emplea");
+                System.out.println("Fallo en la inserción de Empleados");
                 conexion.rollback();
-                    return false;
+               return false;
             }
 
             // Obtener el ID generado para la tabla Persona
             ResultSet personaKeys = psPersona.getGeneratedKeys();
             int personaId = 0;
-            if (personaKeys.next()) {
-                personaId = personaKeys.getInt(1);
+                if (personaKeys.next()) {
+                    personaId = personaKeys.getInt(1);
+            } else {
+            throw new SQLException("No se generó el ID de Empleados");
             }
-            }catch(RuntimeException e){
-                System.out.println(e);
-            }
-            try{
-            // Insertar en tabla Envio
-            PreparedStatement psEnvio = 
-                    conexion.prepareStatement("Insert into Envio (estado_enviado,nro_seguimiento) VALUES (?,?)");
-            
+                
+    
+            PreparedStatement psEnvio = conexion.prepareStatement(
+                "INSERT INTO Envio (estado_enviado, nro_seguimiento) VALUES (?, ?)",
+            Statement.RETURN_GENERATED_KEYS
+            );
             psEnvio.setBoolean(1, envio.isEstado_enviado());
             psEnvio.setInt(2, envio.getNro_seguimiento());
-                    
-            System.out.println(psEnvio);
-            
+
+        System.out.println(psEnvio);
+
             int envioResultado = psEnvio.executeUpdate();
             if (envioResultado == 0) {
-                System.out.println("fallo envio");
+                System.out.println("Fallo en la inserción de Envio");
                 conexion.rollback();
-                return false;
+            return false;
             }
-            }catch(RuntimeException e){System.out.println(e);}
+
+        
             //Insertar en Documentos
             PreparedStatement ps = 
                     conexion.prepareStatement("Insert into Documento (autor,destinatario,fecha_creacion,palabra_clave,id_empleado)values(?,?,?,?,?)");
@@ -79,21 +87,27 @@ public class Repository extends Conexion {
             ps.setString(2,  documento.getDestinatario());
             ps.setString(3,  documento.getFecha_creacion());
             ps.setString(4,  convertirListaAJson(documento.getPalabra_clave()));
-            ps.setInt(5, 45);
+            ps.setInt(5, personaId);
+            System.out.println(ps);
+
             int resultado = ps.executeUpdate();
-            
-            if(resultado >0){
-                System.out.println("biennnnnnn");
-                return true;
-            }else{
-                System.out.println("fallo docu");
+            if(resultado == 0){
+                System.out.println("fallo Docu");
                 return false;
             }
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-        return false;
+            
+            conexion.close();
+            return true;
+            }catch (SQLException e) {
+                System.out.println(e);
+                conexion.rollback();
+                return false;
+            }    
+        }catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        } 
+    
     }
     
       public List<Documento> buscarPorPalabraClave(String palabra) {
@@ -137,7 +151,7 @@ public class Repository extends Conexion {
           Connection conexion = establecerConexion();
           
           String sql = "SELECT e.id_empleado, e.nombre, COUNT(d.id_documento) AS cantidad_documentos "
-                       + "FROM Empleado e "
+                       + "FROM Empleados e "
                        + "JOIN Documento d ON e.id_empleado = d.id_empleado "
                        + "GROUP BY e.id_empleado, e.nombre "
                        + "ORDER BY cantidad_documentos DESC "

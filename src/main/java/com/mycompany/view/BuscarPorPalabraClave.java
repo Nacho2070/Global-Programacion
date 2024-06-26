@@ -52,7 +52,7 @@ public class BuscarPorPalabraClave extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        consultarPorPalabraButton.setText("jButton1");
+        consultarPorPalabraButton.setText("Consultar");
         consultarPorPalabraButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consultarPorPalabraButtonActionPerformed(evt);
@@ -127,7 +127,7 @@ public class BuscarPorPalabraClave extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(salirButton)
-                .addGap(123, 123, 123))
+                .addGap(39, 39, 39))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

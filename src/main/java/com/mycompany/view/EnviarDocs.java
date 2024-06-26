@@ -321,7 +321,7 @@ public class EnviarDocs extends javax.swing.JFrame {
                                 .addComponent(limpiarButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(siguienteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addContainerGap(223, Short.MAX_VALUE))
+                        .addContainerGap(139, Short.MAX_VALUE))
                     .addGroup(EnviarCorreoLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(EnviarCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,7 +382,7 @@ public class EnviarDocs extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EnviarCorreoLayout.createSequentialGroup()
-                        .addGap(12, 47, Short.MAX_VALUE)
+                        .addGap(12, 46, Short.MAX_VALUE)
                         .addGroup(EnviarCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(limpiarButton)
                             .addComponent(siguienteButton))
@@ -409,10 +409,10 @@ public class EnviarDocs extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(394, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(EnviarCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -425,7 +425,7 @@ public class EnviarDocs extends javax.swing.JFrame {
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(EnviarCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(502, 502, 502))
+                .addGap(503, 503, 503))
         );
 
         pack();
