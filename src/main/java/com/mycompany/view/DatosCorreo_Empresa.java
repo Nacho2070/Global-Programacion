@@ -29,7 +29,7 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel16 = new javax.swing.JLabel();
-        EncargadoEnteField = new javax.swing.JTextField();
+        EncargadoCorreoField = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         EmpresaDireccionField = new javax.swing.JTextField();
         EmpresaTelefonoField = new javax.swing.JTextField();
@@ -52,11 +52,11 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel16.setText("Encargado");
 
-        EncargadoEnteField.setBackground(new java.awt.Color(255, 255, 255));
-        EncargadoEnteField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        EncargadoEnteField.addActionListener(new java.awt.event.ActionListener() {
+        EncargadoCorreoField.setBackground(new java.awt.Color(255, 255, 255));
+        EncargadoCorreoField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        EncargadoCorreoField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EncargadoEnteFieldActionPerformed(evt);
+                EncargadoCorreoFieldActionPerformed(evt);
             }
         });
 
@@ -94,7 +94,7 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
         });
 
         jLabel19.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel19.setText("Datos correo");
+        jLabel19.setText("Datos empresa de correo");
 
         numSegTextField.setBackground(new java.awt.Color(255, 255, 255));
         numSegTextField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -118,7 +118,7 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
         jLabel20.setText("Estado Envio");
 
         jLabel23.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel23.setText("Datos empresa encargada del envio del correo");
+        jLabel23.setText("Empresa encargada del envio");
 
         TerminarButton.setText("Terminar");
         TerminarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -150,26 +150,26 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel20)
-                                    .addComponent(jLabel10))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nombreEmpresaEnviTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(numSegTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel20)
+                            .addComponent(jLabel10))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nombreEmpresaEnviTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(numSegTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 167, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel23)
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(nombreEmpresaEnviTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -191,44 +191,40 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel21)
+                            .addComponent(jLabel22)
+                            .addComponent(jLabel17))
+                        .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(NombreEmpresaField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel16)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel22)
-                                        .addComponent(jLabel21)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(EmpresaDireccionField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(EncargadoEnteField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(EmpresaTelefonoField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel17)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 176, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(EmpresaDireccionField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(EncargadoCorreoField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(EmpresaTelefonoField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel19)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NombreEmpresaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(EncargadoEnteField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(EncargadoCorreoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -238,9 +234,9 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EmpresaTelefonoField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -250,7 +246,7 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
     
 
     // Verificar campos en el tercer panel
-    if (EncargadoEnteField.getText().trim().isEmpty() ||
+    if (EncargadoCorreoField.getText().trim().isEmpty() ||
         EmpresaDireccionField.getText().trim().isEmpty() ||
         EmpresaTelefonoField.getText().trim().isEmpty() ||
         NombreEmpresaField.getText().trim().isEmpty()) {
@@ -262,9 +258,9 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
     }
 
     
-    private void EncargadoEnteFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EncargadoEnteFieldActionPerformed
+    private void EncargadoCorreoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EncargadoCorreoFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EncargadoEnteFieldActionPerformed
+    }//GEN-LAST:event_EncargadoCorreoFieldActionPerformed
 
     private void EmpresaDireccionFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmpresaDireccionFieldActionPerformed
         // TODO add your handling code here:
@@ -346,7 +342,7 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField EmpresaDireccionField;
     public javax.swing.JTextField EmpresaTelefonoField;
-    public javax.swing.JTextField EncargadoEnteField;
+    public javax.swing.JTextField EncargadoCorreoField;
     public javax.swing.JTextField NombreEmpresaField;
     public javax.swing.JButton TerminarButton;
     public javax.swing.JComboBox<String> jComboBox;

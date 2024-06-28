@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.naming.InvalidNameException;
 import com.mycompany.models.Documento;
+import com.mycompany.models.EmpresaCorreo;
 import com.mycompany.models.EnteCorreo;
 import com.mycompany.models.Envio;
 import com.mycompany.models.Persona;
@@ -17,6 +18,7 @@ public class service {
     private Envio envio;
     private Persona persona;
     private EnteCorreo enteCorreo;
+    private EmpresaCorreo empresa;
     private Menu vista;
     
     public service() {
@@ -24,6 +26,7 @@ public class service {
         this.envio = new Envio();
         this.persona = new Persona();
         this.enteCorreo = new EnteCorreo();
+        this.empresa = new EmpresaCorreo();
         this.repository = new Repository();
     }
 
@@ -38,7 +41,9 @@ public class service {
     public Persona getPersona() {
         return persona;
     }
-
+    public EmpresaCorreo getEmpresa(){
+        return empresa;
+    }
     public EnteCorreo getEnteCorreo() {
         return enteCorreo;
     }
@@ -51,18 +56,20 @@ public class service {
         }
         return documentos;
     }
+    
     public String autorMasProductivo() {
             return repository.autorMasProductivo();
         }
+    
     public Optional<Integer> cantidadEnEspera() {
        
         return repository.cantidadEnEsperaConsulta();
        
     }
     
-    public boolean guardarEnBD(Documento documento, Persona persona, Envio envio){
+    public boolean guardarEnBD(Documento documento, Persona persona, Envio envio,EmpresaCorreo empresa){
             //Llamamos al repository para guardar los objetos en base de datos
-            if(this.repository.insertarValoresDocumentosBD(documentos,persona,envio)){
+            if(this.repository.insertarValoresDocumentosBD(documentos,persona,envio,empresa)){
                 return true;
             }
            return false;

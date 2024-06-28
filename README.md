@@ -1,4 +1,5 @@
 Tablas para la BD
+
 create database bd_documento;
 
 CREATE TABLE Documento (
@@ -23,4 +24,11 @@ CREATE TABLE Envio (
     id_envio INT AUTO_INCREMENT PRIMARY KEY,
     estado_enviado BOOLEAN NOT NULL DEFAULT false,
     nro_seguimiento INT
+);
+CREATE TABLE EmpresaCorreo (
+    id_empresa INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    direccion VARCHAR(255) NOT NULL,
+    telefono VARCHAR(50) NOT NULL,
+    encargado VARCHAR(255) NOT NULL
 );

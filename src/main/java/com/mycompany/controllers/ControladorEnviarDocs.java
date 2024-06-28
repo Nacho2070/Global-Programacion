@@ -5,6 +5,7 @@
 package com.mycompany.controllers;
 
 import com.mycompany.models.Documento;
+import com.mycompany.models.EmpresaCorreo;
 import com.mycompany.models.EnteCorreo;
 import com.mycompany.models.Envio;
 import com.mycompany.models.Persona;
@@ -44,20 +45,24 @@ public class ControladorEnviarDocs implements ActionListener{
              
     
     public void actionPerformed(ActionEvent ae) {
+        //Si se preciona el boton enviar en el menu
         if (ae.getSource() == vista.EnviarDocsFlotButton) {
             vista.dispose();
             enviarDocs.setVisible(true);
+            //Si se preciona el boton siguiente
         } else if (ae.getSource() == enviarDocs.siguienteButton) {
             if (validarCamposPanel1()) {
                 guardarDatosPanel1();
                 enviarDocs.dispose();
                 enviarDocs2.setVisible(true);
             }
+            //Si se preciona el boton Terminar
         } else if (ae.getSource() == enviarDocs2.TerminarButton) {
-            if (validarCamposPanel2() && validarCamposPanel3()) {
+            //validamos que no haya campos vacios
+            if (validarCamposPanel2()) {                
                 guardarDatosPanel2();
-                guardarDatosPanel3();
-                if (modelo.guardarEnBD(modelo.getDocumento(), modelo.getPersona(), modelo.getEnvio())) {
+               //Guardamos en base de datos
+                if (modelo.guardarEnBD(modelo.getDocumento(), modelo.getPersona(), modelo.getEnvio(), modelo.getEmpresa() )) {
                     JOptionPane.showMessageDialog(null, "Datos guardados correctamente.");
                 } else {
                     JOptionPane.showMessageDialog(null, "Ocurrió un error al guardar los datos.");
@@ -84,6 +89,7 @@ private boolean validarCamposPanel1() {
     private void guardarDatosPanel1() {
         Documento documentos = modelo.getDocumento();
         Persona persona = modelo.getPersona();
+        EnteCorreo enteCorreo = modelo.getEnteCorreo();
 
         documentos.setDestinatario(enviarDocs.destinatarioField.getText());
         documentos.setAutor(enviarDocs.autorField.getText());
@@ -95,13 +101,22 @@ private boolean validarCamposPanel1() {
         persona.setFecha_ingreso(Date.valueOf(LocalDate.now()));  // Ajustar fecha según necesidad
         persona.setDireccion(enviarDocs.dirreccionTextField.getText());
         persona.setCargo(enviarDocs.CargoTextField.getText());
+        
+
+        enteCorreo.setNombre(enviarDocs.nombreEnteDocField.getText());
+        enteCorreo.setDireccion(enviarDocs.dirreccionEnteDocField.getText());
+        enteCorreo.setTelefono(Integer.parseInt(enviarDocs.telefonoEnteField.getText()));
+       
     }
 
     private boolean validarCamposPanel2() {
         if (enviarDocs2.NombreEmpresaField.getText().isEmpty() ||
             enviarDocs2.EmpresaDireccionField.getText().isEmpty() ||
             enviarDocs2.EmpresaTelefonoField.getText().isEmpty() ||
-            enviarDocs2.EncargadoEnteField.getText().isEmpty()) {
+            enviarDocs2.EncargadoCorreoField.getText().isEmpty() ||
+            enviarDocs2.numSegTextField.getText().isEmpty() ||
+            enviarDocs2.nombreEmpresaEnviTextField.getText().isEmpty() ||
+            enviarDocs2.jComboBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos del segundo panel.");
             return false;
         }
@@ -109,25 +124,14 @@ private boolean validarCamposPanel1() {
     }
 
     private void guardarDatosPanel2() {
-        EnteCorreo enteCorreo = modelo.getEnteCorreo();
-
-        enteCorreo.setNombre(enviarDocs2.NombreEmpresaField.getText());
-        enteCorreo.setDireccion(enviarDocs2.EmpresaDireccionField.getText());
-        enteCorreo.setTelefono(Integer.parseInt(enviarDocs2.EmpresaTelefonoField.getText()));
-        enteCorreo.setEncargado(enviarDocs2.EncargadoEnteField.getText());
-    }
-
-    private boolean validarCamposPanel3() {
-        if (enviarDocs2.numSegTextField.getText().isEmpty() ||
-            enviarDocs2.nombreEmpresaEnviTextField.getText().isEmpty() ||
-            enviarDocs2.jComboBox.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos del tercer panel.");
-            return false;
-        }
-        return true;
-    }
-
-    private void guardarDatosPanel3() {
+       
+        EmpresaCorreo empresaCorreo = modelo.getEmpresa();
+           
+           empresaCorreo.setNombre(enviarDocs2.NombreEmpresaField.getText());
+           empresaCorreo.setEncargado(enviarDocs2.EncargadoCorreoField.getText());
+           empresaCorreo.setDireccion(enviarDocs2.EmpresaDireccionField.getText());
+           empresaCorreo.setTelefono(enviarDocs2.EmpresaTelefonoField.getText());
+        
         Envio envio = modelo.getEnvio();
 
         envio.setEstado_enviado("Enviado".equals((String) enviarDocs2.jComboBox.getSelectedItem()));
@@ -149,25 +153,4 @@ private boolean validarCamposPanel1() {
     return lst;
 }
 }       
- /*      
-    public void limpiarCajas() {
-     
-    //TextArea
-        vista.cantdocsConfeccTextArea.setText("");
-        
-    //Fields
-        vista.palabraClaveTextField.setText("");
-        vista.telefonoTextField.setText("");
-        vista.nombreTextField.setText("");
-        vista.CargoTextField.setText("");
-        vista.dirreccionTextField.setText("");
-        vista.fechIngreTextField.setText("");
-        vista.autorField.setText("");
-        vista.telefonoEnteField.setText("");
-        vista.numSegTextField.setText("");
-        vista.palabrasClavesField.setText("");        
-        vista.destinatarioField.setText("");
-        
-}
-
-*/
+ 

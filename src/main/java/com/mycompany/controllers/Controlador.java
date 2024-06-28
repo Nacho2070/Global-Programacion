@@ -1,22 +1,14 @@
 package com.mycompany.controllers;
 
 import com.mycompany.models.Documento;
-import com.mycompany.models.EnteCorreo;
-import com.mycompany.models.Envio;
-import com.mycompany.models.Persona;
-import com.mycompany.models.repository.Repository;
 import com.mycompany.view.Menu;
 
 
 import javax.naming.InvalidNameException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import com.mycompany.models.EnteCorreo;
-import com.mycompany.models.Persona;
 import com.mycompany.models.Services.service;
 import com.mycompany.view.BuscarPorPalabraClave;
 import com.mycompany.view.CantidadEnEspera;
@@ -47,7 +39,7 @@ public class Controlador implements ActionListener {
         //Boton para buscar por palabras claves
         buscar.consultarPorPalabraButton.addActionListener(this);
 
-        //Salir botones ventanas
+        //Botones para abrir las ventanas externas
         buscar.salirButton.addActionListener(this);
         empMasConfecciono.salirButtonEmpleado.addActionListener(this);
         cantidadEspera.salirButtonEspera.addActionListener(this);
@@ -59,9 +51,10 @@ public class Controlador implements ActionListener {
     }
     
     //Usamos el objeto ae para saber que boton se presionar
-     @Override
+    @Override
     public void actionPerformed(ActionEvent ae) {
-        // Botón para buscar por palabra ingresada
+        
+        // Ventana para buscar por palabra ingresada
         if (ae.getSource() == vista.consultarPorPalabraButtonModal) {
             vista.dispose();
             buscar.setVisible(true);
@@ -78,12 +71,13 @@ public class Controlador implements ActionListener {
             }catch (InvalidNameException e) {
                 JOptionPane.showMessageDialog(vista, "Nombre inválido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+          //Boton salir
         } else if (ae.getSource() == buscar.salirButton) {
             buscar.dispose();
             vista.setVisible(true);
         }
 
-        // Método cantidad en espera
+        // Ventana cantidad en espera
         if (ae.getSource() == vista.cantidadEnEsperaButtonModal) {
             vista.dispose();
             cantidadEspera.setVisible(true);
@@ -92,8 +86,9 @@ public class Controlador implements ActionListener {
                 String docs = String.valueOf(cantidadDocs.get());
                 cantidadEspera.mostrarCantDocs(docs);
             } else {
-               // cantidadEspera.mostrarError("No se encontraron documentos en espera");
+                cantidadEspera.mostrarError("No se encontraron documentos en espera");
             }
+          //Boton salir
         } else if (ae.getSource() == cantidadEspera.salirButtonEspera) {
             cantidadEspera.dispose();
             vista.setVisible(true);
@@ -104,6 +99,7 @@ public class Controlador implements ActionListener {
             vista.dispose();
             empMasConfecciono.setVisible(true);
             empMasConfecciono.cantdocsConfeccTextArea.setText(modelo.autorMasProductivo());
+        //Boton salir
         } else if (ae.getSource() == empMasConfecciono.salirButtonEmpleado) {
             empMasConfecciono.dispose();
             vista.setVisible(true);
@@ -111,7 +107,6 @@ public class Controlador implements ActionListener {
 
         
     }
-
 
     public void limpiarCajasBuscar() {
         buscar.palabraClaveTextField.setText("");

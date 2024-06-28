@@ -1,6 +1,7 @@
 package com.mycompany.models.repository;
 
 import com.mycompany.models.Documento;
+import com.mycompany.models.EmpresaCorreo;
 import com.mycompany.models.Envio;
 import com.mycompany.models.Persona;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class Repository extends Conexion {
 
 
-    public boolean insertarValoresDocumentosBD(Documento documento,Persona persona,Envio envio ){
+    public boolean insertarValoresDocumentosBD(Documento documento,Persona persona,Envio envio,EmpresaCorreo empresa ){
         
                 
         Connection conexion = establecerConexion();
@@ -61,8 +62,23 @@ public class Repository extends Conexion {
             } else {
             throw new SQLException("No se generó el ID de Empleados");
             }
-                
-    
+            
+                // Insertar en EmpresaCorreo
+            PreparedStatement psEmpresa = conexion.prepareStatement(
+                "INSERT INTO EmpresaCorreo (nombre, direccion, telefono, encargado) VALUES (?, ?, ?, ?)"             
+            );
+            psEmpresa.setString(1, empresa.getNombre());
+            psEmpresa.setString(2, empresa.getDireccion());
+            psEmpresa.setString(3, empresa.getTelefono());
+            psEmpresa.setString(4, empresa.getEncargado());
+
+            int empresaResultado = psEmpresa.executeUpdate();
+            if (empresaResultado == 0) {
+                conexion.rollback();
+                return false;
+            }
+            
+            //Incertar en Envio
             PreparedStatement psEnvio = conexion.prepareStatement(
                 "INSERT INTO Envio (estado_enviado, nro_seguimiento) VALUES (?, ?)",
             Statement.RETURN_GENERATED_KEYS
@@ -180,7 +196,7 @@ public class Repository extends Conexion {
             
             
       public Optional<Integer> cantidadEnEsperaConsulta() {
-        String sql = "SELECT COUNT(*) FROM Envio WHERE estado_enviado = false";
+        String sql = "SELECT COUNT(*) FROM Envio WHERE estado_enviado = true";
         Connection conexion = establecerConexion();
         try{
             PreparedStatement ps = conexion.prepareStatement(sql);

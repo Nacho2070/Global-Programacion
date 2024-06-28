@@ -4,6 +4,8 @@
  */
 package com.mycompany.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ignacio
@@ -110,6 +112,10 @@ public class CantidadEnEspera extends javax.swing.JFrame {
     public void mostrarCantDocs(String mensaje) {
        cantdocsTextArea.setText(mensaje);
         }
+    public void mostrarError(String mensaje){
+        JOptionPane.showMessageDialog(null, mensaje, "Error",  
+                                           JOptionPane.INFORMATION_MESSAGE);
+    }
     private void cantdocsTextAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantdocsTextAreaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cantdocsTextAreaActionPerformed
