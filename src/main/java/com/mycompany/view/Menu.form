@@ -115,7 +115,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="EnviarDocsFlotButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="EnviarCorreo"/>
+            <Property name="text" type="java.lang.String" value="Confeccionar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EnviarDocsFlotButtonActionPerformed"/>
@@ -174,7 +174,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Enviar correo"/>
+            <Property name="text" type="java.lang.String" value="Confeccionar Documento"/>
           </Properties>
         </Component>
       </SubComponents>

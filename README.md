@@ -25,6 +25,7 @@ CREATE TABLE Envio (
     estado_enviado BOOLEAN NOT NULL DEFAULT false,
     nro_seguimiento INT
 );
+
 CREATE TABLE EmpresaCorreo (
     id_empresa INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,

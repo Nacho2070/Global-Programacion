@@ -41,7 +41,7 @@ public class Menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        EnviarDocsFlotButton.setText("EnviarCorreo");
+        EnviarDocsFlotButton.setText("Confeccionar");
         EnviarDocsFlotButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EnviarDocsFlotButtonActionPerformed(evt);
@@ -75,7 +75,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setText("Enviar correo");
+        jLabel13.setText("Confeccionar Documento");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

@@ -47,7 +47,7 @@ public class Repository extends Conexion {
             System.out.println(psPersona);
 
             int personaResultado = psPersona.executeUpdate();
-            System.out.println(personaResultado);
+            
             if (personaResultado == 0) {
                 System.out.println("Fallo en la inserción de Empleados");
                 conexion.rollback();
@@ -56,29 +56,15 @@ public class Repository extends Conexion {
 
             // Obtener el ID generado para la tabla Persona
             ResultSet personaKeys = psPersona.getGeneratedKeys();
+                System.out.println(personaKeys);
             int personaId = 0;
                 if (personaKeys.next()) {
                     personaId = personaKeys.getInt(1);
             } else {
             throw new SQLException("No se generó el ID de Empleados");
-            }
-            
-                // Insertar en EmpresaCorreo
-            PreparedStatement psEmpresa = conexion.prepareStatement(
-                "INSERT INTO EmpresaCorreo (nombre, direccion, telefono, encargado) VALUES (?, ?, ?, ?)"             
-            );
-            psEmpresa.setString(1, empresa.getNombre());
-            psEmpresa.setString(2, empresa.getDireccion());
-            psEmpresa.setString(3, empresa.getTelefono());
-            psEmpresa.setString(4, empresa.getEncargado());
-
-            int empresaResultado = psEmpresa.executeUpdate();
-            if (empresaResultado == 0) {
-                conexion.rollback();
-                return false;
-            }
-            
-            //Incertar en Envio
+            } 
+                          
+            //Insertar en Envio
             PreparedStatement psEnvio = conexion.prepareStatement(
                 "INSERT INTO Envio (estado_enviado, nro_seguimiento) VALUES (?, ?)",
             Statement.RETURN_GENERATED_KEYS
@@ -95,7 +81,22 @@ public class Repository extends Conexion {
             return false;
             }
 
-        
+              // Insertar en EmpresaCorreo
+            PreparedStatement psEmpresa = conexion.prepareStatement(
+                "INSERT INTO EmpresaCorreo (nombre, direccion, telefono, encargado) VALUES (?, ?, ?, ?)"             
+            );
+            psEmpresa.setString(1, empresa.getNombre());
+            psEmpresa.setString(2, empresa.getDireccion());
+            psEmpresa.setString(3, empresa.getTelefono());
+            psEmpresa.setString(4, empresa.getEncargado());
+
+            int empresaResultado = psEmpresa.executeUpdate();
+            if (empresaResultado == 0) {
+                conexion.rollback();
+                return false;
+            }
+            System.out.println(psEmpresa);
+            
             //Insertar en Documentos
             PreparedStatement ps = 
                     conexion.prepareStatement("Insert into Documento (autor,destinatario,fecha_creacion,palabra_clave,id_empleado)values(?,?,?,?,?)");
@@ -108,7 +109,6 @@ public class Repository extends Conexion {
 
             int resultado = ps.executeUpdate();
             if(resultado == 0){
-                System.out.println("fallo Docu");
                 return false;
             }
             
@@ -180,11 +180,9 @@ public class Repository extends Conexion {
                 int idEmpleado = rs.getInt("id_empleado");
                 String nombreEmpleado = rs.getString("nombre");
                 int cantidadDocumentos = rs.getInt("cantidad_documentos");
-
-                String resultado = "Empleado más productivo:\n"
-                             + "ID Empleado: " + idEmpleado + "\n"
-                             + "Nombre: " + nombreEmpleado + "\n"
-                             + "Cantidad de documentos: " + cantidadDocumentos;
+                                             
+                String resultado = "Nombre: " + nombreEmpleado + "\n"
+                                + ", Cantidad de documentos confeccionados: " + cantidadDocumentos;
             return resultado;
             } 
              } catch (Exception e) {}

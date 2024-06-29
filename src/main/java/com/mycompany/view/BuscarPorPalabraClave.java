@@ -146,7 +146,13 @@ public class BuscarPorPalabraClave extends javax.swing.JFrame {
      public void mostrarDocumentos(List<Documento> documentos) {
         //valorestextField.setText("Documentos encontrados:\n");
         for (Documento doc : documentos) {
-            MostrarPalabrasClavesTextPane.setText(doc.getAutor() + " - " + doc.getDestinatario() + "\n" + "Palabras Claves: " + doc.getPalabra_clave());
+            MostrarPalabrasClavesTextPane.setText("Autor: " + doc.getAutor() + 
+                    "\n" +
+                    " - Destinatario: " + doc.getDestinatario() + 
+                    "\n" +
+                    "Fecha de creacion: "+ doc.getFecha_creacion() + 
+                    "\n" +
+                    "Palabras Claves: " + doc.getPalabra_clave());
         }
         }
     private void consultarPorPalabraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarPorPalabraButtonActionPerformed

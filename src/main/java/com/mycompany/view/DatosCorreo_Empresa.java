@@ -94,7 +94,7 @@ public class DatosCorreo_Empresa extends javax.swing.JFrame {
         });
 
         jLabel19.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel19.setText("Datos empresa de correo");
+        jLabel19.setText("Datos de la empresa de correo");
 
         numSegTextField.setBackground(new java.awt.Color(255, 255, 255));
         numSegTextField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
