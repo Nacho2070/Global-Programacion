@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.controllers;
 
 import com.mycompany.models.Documento;
@@ -15,9 +11,9 @@ import com.mycompany.view.EnviarDocs;
 import com.mycompany.view.Menu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -44,7 +40,8 @@ public class ControladorEnviarDocs implements ActionListener{
     }
              
     
-    public void actionPerformed(ActionEvent ae) {
+    public void actionPerformed(ActionEvent ae){
+     try{  
         //Si se preciona el boton enviar en el menu
         if (ae.getSource() == vista.EnviarDocsFlotButton) {
             vista.dispose();
@@ -70,7 +67,14 @@ public class ControladorEnviarDocs implements ActionListener{
                 enviarDocs2.dispose();
                 vista.setVisible(true);
             }
-        } 
+        }
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, "Error al parsear la fecha: " + e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error: " + e.getMessage());
+        }
+        
+        
     }
 private boolean validarCamposPanel1() {
         if (enviarDocs.destinatarioField.getText().isEmpty() ||
@@ -86,19 +90,23 @@ private boolean validarCamposPanel1() {
         return true;
     }
 
-    private void guardarDatosPanel1() {
+    private void guardarDatosPanel1() throws ParseException {
+        //Damos formato a la fecha
+        SimpleDateFormat objSDF = new SimpleDateFormat("dd-mm-yyyy");
+        Date objDate = new Date();
+        
         Documento documentos = modelo.getDocumento();
         Persona persona = modelo.getPersona();
         EnteCorreo enteCorreo = modelo.getEnteCorreo();
 
         documentos.setDestinatario(enviarDocs.destinatarioField.getText());
         documentos.setAutor(enviarDocs.autorField.getText());
-        documentos.setFecha_creacion(String.valueOf(LocalTime.now()));
+        documentos.setFecha_creacion(objSDF.parse(objSDF.format(objDate) ));
         documentos.setPalabraClave(stringAList(enviarDocs.palabrasClavesField.getText()));
 
         persona.setNombre(enviarDocs.nombreTextField.getText());
         persona.setTelefono(enviarDocs.telefonoTextField.getText());
-        persona.setFecha_ingreso(Date.valueOf(LocalDate.now()));  // Ajustar fecha según necesidad
+        persona.setFecha_ingreso(objSDF.parse(enviarDocs.fechIngreTextField.getText() ) );        
         persona.setDireccion(enviarDocs.dirreccionTextField.getText());
         persona.setCargo(enviarDocs.CargoTextField.getText());
         
@@ -146,10 +154,10 @@ private boolean validarCamposPanel1() {
         documentos.setTrabaja(persona);
     }
 
-
+    //funcion para convertir string a list
     private List<String>stringAList(String s){
-        List<String> lst = List.of(s.split(","));
-        System.out.println(lst);
+        //Convertimos la palabra a lista, sacandole la coma y el espacio en blanco
+        List<String> lst = List.of(s.split("\\s*,\\s*") );        
     return lst;
 }
 }       

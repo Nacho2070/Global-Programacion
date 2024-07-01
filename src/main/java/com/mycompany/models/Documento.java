@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import com.mycompany.models.repository.Repository;
+import java.util.Date;
 
 public class Documento {
     
     private String destinatario;
-    private String fecha_creacion;
+    private Date fecha_creacion;
     private String autor;
     private List<String> palabraClave;
     private ArrayList<Envio> enviado = new ArrayList<>();
@@ -29,7 +30,7 @@ public class Documento {
         }
 
 
-        public String getFecha_creacion() {
+        public Date getFecha_creacion() {
             return fecha_creacion;
         }
 
@@ -45,7 +46,7 @@ public class Documento {
         this.destinatario = destinatario;
         }
 
-        public void setFecha_creacion(String fecha_creacion) {
+        public void setFecha_creacion(Date fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
         }
 

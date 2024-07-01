@@ -49,7 +49,6 @@ public class EnviarDocs extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         siguienteButton = new javax.swing.JButton();
-        limpiarButton = new javax.swing.JButton();
         nombreEnteDocField = new javax.swing.JTextField();
         dirreccionEnteDocField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -217,13 +216,6 @@ public class EnviarDocs extends javax.swing.JFrame {
             }
         });
 
-        limpiarButton.setText("Limpiar");
-        limpiarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                limpiarButtonActionPerformed(evt);
-            }
-        });
-
         nombreEnteDocField.setBackground(new java.awt.Color(255, 255, 255));
         nombreEnteDocField.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         nombreEnteDocField.addActionListener(new java.awt.event.ActionListener() {
@@ -265,31 +257,28 @@ public class EnviarDocs extends javax.swing.JFrame {
         EnviarCorreoLayout.setHorizontalGroup(
             EnviarCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(EnviarCorreoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(EnviarCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EnviarCorreoLayout.createSequentialGroup()
                         .addGroup(EnviarCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(EnviarCorreoLayout.createSequentialGroup()
-                                .addContainerGap()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(autorField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, EnviarCorreoLayout.createSequentialGroup()
-                                .addContainerGap()
                                 .addComponent(jLabel11)
                                 .addGap(99, 99, 99)
                                 .addComponent(destinatarioField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(150, 150, 150))
                     .addGroup(EnviarCorreoLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel17)
                         .addGap(76, 76, 76)
                         .addComponent(palabrasClavesField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(EnviarCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(EnviarCorreoLayout.createSequentialGroup()
-                        .addComponent(limpiarButton)
-                        .addGap(18, 18, 18)
+                        .addGap(88, 88, 88)
                         .addComponent(siguienteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(51, Short.MAX_VALUE))
                     .addGroup(EnviarCorreoLayout.createSequentialGroup()
@@ -341,9 +330,7 @@ public class EnviarDocs extends javax.swing.JFrame {
                                     .addComponent(telefonoEnteField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel15))))))
                 .addGap(22, 22, Short.MAX_VALUE)
-                .addGroup(EnviarCorreoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(limpiarButton)
-                    .addComponent(siguienteButton))
+                .addComponent(siguienteButton)
                 .addGap(18, 18, 18))
         );
 
@@ -450,10 +437,6 @@ public class EnviarDocs extends javax.swing.JFrame {
         */
     }//GEN-LAST:event_siguienteButtonActionPerformed
 
-    private void limpiarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_limpiarButtonActionPerformed
-
     private void nombreEnteDocFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreEnteDocFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreEnteDocFieldActionPerformed
@@ -525,7 +508,6 @@ public class EnviarDocs extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel2;
-    public javax.swing.JButton limpiarButton;
     public javax.swing.JTextField nombreEnteDocField;
     public javax.swing.JTextField nombreTextField;
     public javax.swing.JTextField palabrasClavesField;

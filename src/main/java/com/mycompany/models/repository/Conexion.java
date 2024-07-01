@@ -22,7 +22,7 @@ public class Conexion {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
             conectar= DriverManager.getConnection(cadena,usuario,contrasenia);
-            System.out.println("conectado base de datos");      
+            System.out.println("conexion a base de datos");      
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"Ocurrio un error: "+e.toString());
         }

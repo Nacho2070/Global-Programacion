@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,112 +20,121 @@ import java.util.Optional;
 public class Repository extends Conexion {
 
 
-    public boolean insertarValoresDocumentosBD(Documento documento,Persona persona,Envio envio,EmpresaCorreo empresa ){
+   public boolean insertarValoresDocumentosBD(Documento documento, Persona persona, Envio envio, EmpresaCorreo empresa) {
+    Connection conexion = establecerConexion();
+
+    try {
+        conexion.setAutoCommit(false);
+
+        // Insertar en Empleados
+            String sqlPersona = "INSERT INTO Empleados (nombre, direccion, telefono, fecha_ingreso, cargo) VALUES (?, ?, ?, ?, ?)";
+    PreparedStatement psPersona = conexion.prepareStatement(
+                sqlPersona,
+    Statement.RETURN_GENERATED_KEYS
+        );
+        psPersona.setString(1, persona.getNombre());
+        psPersona.setString(2, persona.getDireccion());
+        psPersona.setString(3, persona.getTelefono());
+        //Date a String
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
         
-                
-        Connection conexion = establecerConexion();
+        String fechaCadenaPersona = sdf.format(persona.getFecha_ingreso());
         
-    try{    
-          conexion.setAutoCommit(false);
+        
+        psPersona.setString(4, fechaCadenaPersona);
+        psPersona.setString(5, persona.getCargo());
 
-            //Insertar en Empleado
-            try {
+        int personaResultado = psPersona.executeUpdate();
+        if (personaResultado == 0) {
+            conexion.rollback();
+            return false;
+        }
 
-            PreparedStatement psPersona = conexion.prepareStatement(
-                "INSERT INTO Empleados (nombre, direccion, telefono, fecha_ingreso, cargo) VALUES (?, ?, ?, ?, ?)",
-                Statement.RETURN_GENERATED_KEYS
-            );
-            psPersona.setString(1, persona.getNombre());
-            psPersona.setString(2, persona.getDireccion());
-            psPersona.setString(3, persona.getTelefono());
-    
-            // Convertimos Date a String
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String fechaComoCadena = sdf.format(persona.getFecha_ingreso());
-            psPersona.setString(4, fechaComoCadena);
-            psPersona.setString(5, persona.getCargo());
-    
-            System.out.println(psPersona);
-
-            int personaResultado = psPersona.executeUpdate();
-            
-            if (personaResultado == 0) {
-                System.out.println("Fallo en la inserción de Empleados");
-                conexion.rollback();
-               return false;
-            }
-
-            // Obtener el ID generado para la tabla Persona
-            ResultSet personaKeys = psPersona.getGeneratedKeys();
-                System.out.println(personaKeys);
-            int personaId = 0;
-                if (personaKeys.next()) {
-                    personaId = personaKeys.getInt(1);
-            } else {
+        // Obtener el ID generado para la tabla Empleados
+        ResultSet personaKeys = psPersona.getGeneratedKeys();
+        int personaId = 0;
+        if (personaKeys.next()) {
+            personaId = personaKeys.getInt(1);
+        } else {
             throw new SQLException("No se generó el ID de Empleados");
-            } 
-                          
-            //Insertar en Envio
-            PreparedStatement psEnvio = conexion.prepareStatement(
-                "INSERT INTO Envio (estado_enviado, nro_seguimiento) VALUES (?, ?)",
+        }
+
+        // Insertar en Envio
+        String sqlEnvio = "INSERT INTO Envio (estado_enviado, nro_seguimiento) VALUES (?, ?)";
+        PreparedStatement psEnvio = conexion.prepareStatement(
+            sqlEnvio,
             Statement.RETURN_GENERATED_KEYS
-            );
-            psEnvio.setBoolean(1, envio.isEstado_enviado());
-            psEnvio.setInt(2, envio.getNro_seguimiento());
+        );
+        psEnvio.setBoolean(1, envio.isEstado_enviado());
+        psEnvio.setInt(2, envio.getNro_seguimiento());
 
-        System.out.println(psEnvio);
-
-            int envioResultado = psEnvio.executeUpdate();
-            if (envioResultado == 0) {
-                System.out.println("Fallo en la inserción de Envio");
-                conexion.rollback();
+        int envioResultado = psEnvio.executeUpdate();
+        if (envioResultado == 0) {
+            conexion.rollback();
             return false;
-            }
+        }
 
-              // Insertar en EmpresaCorreo
-            PreparedStatement psEmpresa = conexion.prepareStatement(
-                "INSERT INTO EmpresaCorreo (nombre, direccion, telefono, encargado) VALUES (?, ?, ?, ?)"             
-            );
-            psEmpresa.setString(1, empresa.getNombre());
-            psEmpresa.setString(2, empresa.getDireccion());
-            psEmpresa.setString(3, empresa.getTelefono());
-            psEmpresa.setString(4, empresa.getEncargado());
+        // Insertar en EmpresaCorreo
+        String sqlEmpresa = "INSERT INTO EmpresaCorreo (nombre, direccion, telefono, encargado) VALUES (?, ?, ?, ?)";
+        PreparedStatement psEmpresa = conexion.prepareStatement(
+            sqlEmpresa
+        );
+        psEmpresa.setString(1, empresa.getNombre());
+        psEmpresa.setString(2, empresa.getDireccion());
+        psEmpresa.setString(3, empresa.getTelefono());
+        psEmpresa.setString(4, empresa.getEncargado());
 
-            int empresaResultado = psEmpresa.executeUpdate();
-            if (empresaResultado == 0) {
-                conexion.rollback();
-                return false;
-            }
-            System.out.println(psEmpresa);
-            
-            //Insertar en Documentos
-            PreparedStatement ps = 
-                    conexion.prepareStatement("Insert into Documento (autor,destinatario,fecha_creacion,palabra_clave,id_empleado)values(?,?,?,?,?)");
-            ps.setString(1,  documento.getAutor());
-            ps.setString(2,  documento.getDestinatario());
-            ps.setString(3,  documento.getFecha_creacion());
-            ps.setString(4,  convertirListaAJson(documento.getPalabra_clave()));
-            ps.setInt(5, personaId);
-            System.out.println(ps);
-
-            int resultado = ps.executeUpdate();
-            if(resultado == 0){
-                return false;
-            }
-            
-            conexion.close();
-            return true;
-            }catch (SQLException e) {
-                System.out.println(e);
-                conexion.rollback();
-                return false;
-            }    
-        }catch (SQLException e) {
-            System.out.println(e);
+        int empresaResultado = psEmpresa.executeUpdate();
+        if (empresaResultado == 0) {
+            conexion.rollback();
             return false;
-        } 
-    
+        }
+
+        // Insertar en Documento
+        String sqlDocumento = "INSERT INTO Documento (autor, destinatario, fecha_creacion, palabra_clave, id_empleado) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement psDocumento = conexion.prepareStatement(
+            sqlDocumento
+        );
+        psDocumento.setString(1, documento.getAutor());
+        psDocumento.setString(2, documento.getDestinatario());
+        
+        String fechaCadDoc = sdf.format(documento.getFecha_creacion());
+                
+        psDocumento.setString(3,fechaCadDoc);
+        psDocumento.setString(4, convertirListaAJson(documento.getPalabra_clave()));
+        psDocumento.setInt(5, personaId);
+
+        int documentoResultado = psDocumento.executeUpdate();
+        if (documentoResultado == 0) {
+            conexion.rollback();
+            return false;
+        }
+
+        // Confirmar la transacción
+        conexion.commit();
+        return true;
+
+    } catch (SQLException e) {
+        try {
+            if (conexion != null) {
+                conexion.rollback();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        e.printStackTrace();
+        return false;
+    } finally {
+        try {
+            if (conexion != null) {
+                conexion.setAutoCommit(true);
+                conexion.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
+}
     
       public List<Documento> buscarPorPalabraClave(String palabra) {
         List<Documento> documentos = new ArrayList<>();
@@ -139,7 +149,8 @@ public class Repository extends Conexion {
 
             
             PreparedStatement ps = conexion.prepareStatement("SELECT * FROM Documento WHERE JSON_CONTAINS(palabra_clave, ?)");
-                
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");   
+            
             ps.setString(1,palabraJson);
             ResultSet rs = ps.executeQuery();
             System.out.println(rs); 
@@ -147,8 +158,11 @@ public class Repository extends Conexion {
                 Documento doc = new Documento();
                 doc.setAutor(rs.getString("autor"));
                 doc.setDestinatario(rs.getString("destinatario"));
-                doc.setFecha_creacion(rs.getString("fecha_creacion"));
-
+                
+                try{
+                doc.setFecha_creacion(sdf.parse(rs.getString("fecha_creacion") ));
+                }catch(ParseException e){}    
+                
                 String palabraClaveJson = rs.getString("palabra_clave");
                 List<String> palabraClaveList = convertirJsonALista(palabraClaveJson);
                 System.out.println(palabraClaveList);
@@ -189,9 +203,7 @@ public class Repository extends Conexion {
               
                 return "No se encontraron resultados";
       }         
-             
-               
-            
+                                        
             
       public Optional<Integer> cantidadEnEsperaConsulta() {
         String sql = "SELECT COUNT(*) FROM Envio WHERE estado_enviado = true";
@@ -211,25 +223,20 @@ public class Repository extends Conexion {
             e.printStackTrace();
         }
             return Optional.empty();
-  }
-
-      
-      
-     private String convertirListaAJson(List<String> lista) {
-         StringBuilder json = new StringBuilder("[");
-         for (int i = 0; i < lista.size(); i++) {
-        json.append("\"").append(lista.get(i)).append("\"");
-        if (i < lista.size() - 1) {
-            json.append(",");
+  }      
+     
+     private static String convertirListaAJson(List<String> lista) {
+        StringBuilder json = new StringBuilder("[");
+        for (int i = 0; i < lista.size(); i++) {
+            json.append("[\"").append(lista.get(i)).append("\"]");
+            if (i < lista.size() - 1) {
+                json.append(",");
+            }
         }
-        }
-            json.append("]");
+        json.append("]");
         return json.toString();
     }
-     
-     
-     private List<String> convertirJsonALista(String json) {
-        // Asumimos que el formato es ["clave1", "clave2", ...]
+     private List<String> convertirJsonALista(String json) {       
         json = json.replace("[", "").replace("]", "").replace("\"", "");
         String[] items = json.split(",");
         List<String> list = new ArrayList<>();

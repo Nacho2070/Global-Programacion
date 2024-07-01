@@ -14,8 +14,9 @@ import com.mycompany.view.BuscarPorPalabraClave;
 import com.mycompany.view.CantidadEnEspera;
 import com.mycompany.view.EmpleadoQueMasCofeccionoDocs;
 import javax.swing.JOptionPane;
-
+//Controlador para los metodos,BuscarPorPalabraClave, CantidadEnEspera, EmpleadoQueMasCofeccionoDocs
 public class Controlador implements ActionListener {
+   
     private Menu vista;
     private BuscarPorPalabraClave buscar;
     private CantidadEnEspera cantidadEspera;
@@ -50,7 +51,7 @@ public class Controlador implements ActionListener {
         vista.setLocationRelativeTo(null);
     }
     
-    //Usamos el objeto ae para saber que boton se presionar
+    //Usamos el objeto ae para saber que boton se presiona
     @Override
     public void actionPerformed(ActionEvent ae) {
         
@@ -62,9 +63,11 @@ public class Controlador implements ActionListener {
             try{
             String palabra = buscar.palabraClaveTextField.getText();
             List<Documento> resultados = modelo.documentoQueIncluyen(palabra);
+            //Si la palabra no se encuentra mostramos error
             if (resultados.isEmpty()) {
                 System.out.println("No se encontraron documentos con esa palabra clave");
                 limpiarCajasBuscar();
+                //sino se muestra en la vista el resultado
             } else {
                 buscar.mostrarDocumentos(resultados);
             }
