@@ -39,5 +39,4 @@ public class EmpresaCorreo {
         this.encargado = encargado;
     }
     
-    
 }

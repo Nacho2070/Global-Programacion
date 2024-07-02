@@ -12,7 +12,6 @@ import com.mycompany.view.BuscarPorPalabraClave;
 import com.mycompany.view.CantidadEnEspera;
 import com.mycompany.view.DatosCorreo_Empresa;
 import com.mycompany.view.EmpleadoQueMasCofeccionoDocs;
-
 import com.mycompany.view.EnviarDocs;
 import com.mycompany.view.Menu;
 
@@ -26,14 +25,14 @@ public class ParcialProgramacion {
         BuscarPorPalabraClave buscar = new BuscarPorPalabraClave();
         CantidadEnEspera cantidad = new CantidadEnEspera();
         EmpleadoQueMasCofeccionoDocs emp = new EmpleadoQueMasCofeccionoDocs();
-        
+
         service modelo = new service();
-       
-        ControladorEnviarDocs controladorEnviarDocs = new ControladorEnviarDocs(enviarDocs, enviarDocs2,modelo,vista);
-        
-        Controlador controlador = new Controlador(vista, modelo,buscar,cantidad,emp);
+
+        ControladorEnviarDocs controladorEnviarDocs = new ControladorEnviarDocs(enviarDocs, enviarDocs2, modelo, vista);
+
+        Controlador controlador = new Controlador(vista, modelo, buscar, cantidad, emp);
         controlador.iniciar();
         vista.setVisible(true);
-                
     }
+    
 }
