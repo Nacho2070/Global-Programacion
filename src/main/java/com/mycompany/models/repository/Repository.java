@@ -141,12 +141,9 @@ public class Repository extends Conexion {
             return documentos;
         }
         try {
-
             String palabraJson = "\"" + palabra + "\"";
-
             PreparedStatement ps = conexion.prepareStatement("SELECT * FROM Documento WHERE JSON_CONTAINS(palabra_clave, ?)");
             SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-
             ps.setString(1, palabraJson);
             ResultSet rs = ps.executeQuery();
             System.out.println(rs);
@@ -154,17 +151,14 @@ public class Repository extends Conexion {
                 Documento doc = new Documento();
                 doc.setAutor(rs.getString("autor"));
                 doc.setDestinatario(rs.getString("destinatario"));
-
                 try {
                     doc.setFecha_creacion(sdf.parse(rs.getString("fecha_creacion")));
                 } catch (ParseException e) {
                 }
-
                 String palabraClaveJson = rs.getString("palabra_clave");
                 List<String> palabraClaveList = convertirJsonALista(palabraClaveJson);
                 System.out.println(palabraClaveList);
                 doc.setPalabraClave(palabraClaveList);
-
                 documentos.add(doc);
             }
         } catch (SQLException e) {

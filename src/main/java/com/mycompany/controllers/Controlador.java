@@ -13,7 +13,7 @@ import com.mycompany.view.CantidadEnEspera;
 import com.mycompany.view.EmpleadoQueMasCofeccionoDocs;
 import javax.swing.JOptionPane;
 
-//Controlador para los metodos,BuscarPorPalabraClave, CantidadEnEspera, EmpleadoQueMasCofeccionoDocs
+//Controlador para los metodos BuscarPorPalabraClave, CantidadEnEspera, EmpleadoQueMasCofeccionoDocs
 public class Controlador implements ActionListener {
 
     private Menu vista;
@@ -52,7 +52,7 @@ public class Controlador implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
 
-        // Ventana para buscar por palabra ingresada
+        // Ventana para buscar por palabra clave ingresada
         if (ae.getSource() == vista.consultarPorPalabraButtonModal) {
             vista.dispose();
             buscar.setVisible(true);
@@ -71,7 +71,7 @@ public class Controlador implements ActionListener {
             } catch (InvalidNameException e) {
                 JOptionPane.showMessageDialog(vista, "Nombre inválido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-            //Boton salir
+        //Boton salir
         } else if (ae.getSource() == buscar.salirButton) {
             buscar.dispose();
             vista.setVisible(true);

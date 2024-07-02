@@ -38,18 +38,18 @@ public class ControladorEnviarDocs implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         try {
-            //Si se preciona el boton enviar en el menu
+            //Si se presiona el boton enviar en el menu
             if (ae.getSource() == vista.EnviarDocsFlotButton) {
                 vista.dispose();
                 enviarDocs.setVisible(true);
-                //Si se preciona el boton siguiente
+                //Si se presiona el boton siguiente
             } else if (ae.getSource() == enviarDocs.siguienteButton) {
                 if (validarCamposPanel1()) {
                     guardarDatosPanel1();
                     enviarDocs.dispose();
                     enviarDocs2.setVisible(true);
                 }
-                //Si se preciona el boton Terminar
+                //Si se presiona el boton Terminar
             } else if (ae.getSource() == enviarDocs2.TerminarButton) {
                 //validamos que no haya campos vacios
                 if (validarCamposPanel2()) {

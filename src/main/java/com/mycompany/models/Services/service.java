@@ -51,7 +51,6 @@ public class service {
     }
 
     public List<Documento> documentoQueIncluyen(String palabra) throws InvalidNameException {
-
         List<Documento> documentos = repository.buscarPorPalabraClave(palabra);
         if (documentos.isEmpty()) {
             throw new InvalidNameException("No se encontraron documentos con la palabra clave proporcionada.");

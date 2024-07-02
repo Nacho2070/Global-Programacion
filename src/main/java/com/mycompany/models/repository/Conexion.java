@@ -16,7 +16,6 @@ public class Conexion {
 
     public Connection establecerConexion() {
         Connection conectar = null;
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conectar = DriverManager.getConnection(cadena, usuario, contrasenia);
