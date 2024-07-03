@@ -25,66 +25,52 @@ public class Documento {
         this.trabaja = new ArrayList<>();
     }
 
-        public String getDestinatario() {
-            return destinatario;
-        }
+    public String getDestinatario() {
+        return destinatario;
+    }
 
+    public Date getFecha_creacion() {
+        return fecha_creacion;
+    }
 
-        public Date getFecha_creacion() {
-            return fecha_creacion;
-        }
+    public String getAutor() {
+        return autor;
+    }
 
-        public String getAutor() {
-            return autor;
-        }
+    public List<String> getPalabra_clave() {
+        return palabraClave;
+    }
 
-        public List<String> getPalabra_clave() {
-            return palabraClave;
-        }
-
-        public void setDestinatario(String destinatario) {
+    public void setDestinatario(String destinatario) {
         this.destinatario = destinatario;
-        }
+    }
 
-        public void setFecha_creacion(Date fecha_creacion) {
+    public void setFecha_creacion(Date fecha_creacion) {
         this.fecha_creacion = fecha_creacion;
-        }
+    }
 
-        public void setAutor(String autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
-        }
+    }
 
-        public void setPalabraClave(List<String> palabraClave) {
+    public void setPalabraClave(List<String> palabraClave) {
         this.palabraClave = palabraClave;
-        }
-        public List<Envio> getEnviado() { return enviado; }
+    }
 
-        public void setEnvio(Envio enviado) {
+    public List<Envio> getEnviado() {
+        return enviado;
+    }
+
+    public void setEnvio(Envio enviado) {
         this.enviado.add(enviado);
-        }
+    }
 
-        public void setSe_envia(EnteCorreo se_envia) {
+    public void setSe_envia(EnteCorreo se_envia) {
         this.se_envia.add(se_envia);
-        }
+    }
 
-        public void setTrabaja(Persona trabaja) {
+    public void setTrabaja(Persona trabaja) {
         this.trabaja.add(trabaja);
-        }
-
-       
-            /*
-        List<Documento> resultados = new ArrayList<>();
-            for (String palabraClave : palabra_clave) {
-                if (palabraClave.equalsIgnoreCase(palabra)) {
-                    resultados.add(palabraClave.get);
-                    break;
-                }
-            }
-        return resultados;
- */
-        
-
-        
-
-        
+    }
+    
 }

@@ -20,7 +20,7 @@ public class service {
     private EnteCorreo enteCorreo;
     private EmpresaCorreo empresa;
     private Menu vista;
-    
+
     public service() {
         this.documentos = new Documento();
         this.envio = new Envio();
@@ -41,41 +41,39 @@ public class service {
     public Persona getPersona() {
         return persona;
     }
-    public EmpresaCorreo getEmpresa(){
+
+    public EmpresaCorreo getEmpresa() {
         return empresa;
     }
+
     public EnteCorreo getEnteCorreo() {
         return enteCorreo;
     }
 
     public List<Documento> documentoQueIncluyen(String palabra) throws InvalidNameException {
-        
         List<Documento> documentos = repository.buscarPorPalabraClave(palabra);
         if (documentos.isEmpty()) {
             throw new InvalidNameException("No se encontraron documentos con la palabra clave proporcionada.");
         }
         return documentos;
     }
-    
-    public String autorMasProductivo() {
-            return repository.autorMasProductivo();
-        }
-    
-    public Optional<Integer> cantidadEnEspera() {
-       
-        return repository.cantidadEnEsperaConsulta();
-       
-    }
-    
-    public boolean guardarEnBD(Documento documento, Persona persona, Envio envio,EmpresaCorreo empresa){
-            //Llamamos al repository para guardar los objetos en base de datos
-            if(this.repository.insertarValoresDocumentosBD(documentos,persona,envio,empresa)){
-                return true;
-            }
-           return false;
-    }
-    
-    
-    }
-    
 
+    public String autorMasProductivo() {
+        return repository.autorMasProductivo();
+    }
+
+    public Optional<Integer> cantidadEnEspera() {
+
+        return repository.cantidadEnEsperaConsulta();
+
+    }
+
+    public boolean guardarEnBD(Documento documento, Persona persona, Envio envio, EmpresaCorreo empresa) {
+        //Llamamos al repository para guardar los objetos en base de datos
+        if (this.repository.insertarValoresDocumentosBD(documentos, persona, envio, empresa)) {
+            return true;
+        }
+        return false;
+    }
+
+}
