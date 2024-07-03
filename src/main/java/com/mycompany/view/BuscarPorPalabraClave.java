@@ -81,9 +81,9 @@ public class BuscarPorPalabraClave extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(palabraClaveTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(consultarPorPalabraButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,13 +146,13 @@ public class BuscarPorPalabraClave extends javax.swing.JFrame {
      public void mostrarDocumentos(List<Documento> documentos) {
         //valorestextField.setText("Documentos encontrados:\n");
         for (Documento doc : documentos) {
-            MostrarPalabrasClavesTextPane.setText("Autor: " + doc.getAutor() + 
+            MostrarPalabrasClavesTextPane.setText(" - Autor: " + doc.getAutor() + 
                     "\n" +
                     " - Destinatario: " + doc.getDestinatario() + 
                     "\n" +
-                    "Fecha de creacion: "+ doc.getFecha_creacion() + 
+                    " - Fecha de creacion: "+ doc.getFecha_creacion() + 
                     "\n" +
-                    "Palabras Claves: " + doc.getPalabra_clave());
+                    " - Palabras Claves: " + doc.getPalabra_clave());
         }
         }
     private void consultarPorPalabraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarPorPalabraButtonActionPerformed

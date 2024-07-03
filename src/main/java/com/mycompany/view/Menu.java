@@ -64,7 +64,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Palabra Clave");
+        jLabel7.setText("Buscar por palabra clave");
 
         jLabel18.setText("Empleado que mas docs confecciono");
 

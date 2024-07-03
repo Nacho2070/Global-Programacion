@@ -182,9 +182,12 @@ public class Repository extends Conexion {
           
           String sql = "SELECT e.id_empleado, e.nombre, COUNT(d.id_documento) AS cantidad_documentos "
                        + "FROM Empleados e "
+                    // Hacemos una unión con la tabla Documento, basada en el id_empleado
                        + "JOIN Documento d ON e.id_empleado = d.id_empleado "
                        + "GROUP BY e.id_empleado, e.nombre "
+                    // Ordenamos los resultados por la cantidad de documentos en orden descendente
                        + "ORDER BY cantidad_documentos DESC "
+                    //Limitamos la fila a un resultado
                        + "LIMIT 1";
           
           try {
@@ -206,7 +209,7 @@ public class Repository extends Conexion {
                                         
             
       public Optional<Integer> cantidadEnEsperaConsulta() {
-        String sql = "SELECT COUNT(*) FROM Envio WHERE estado_enviado = true";
+        String sql = "SELECT COUNT(*) FROM Envio WHERE estado_enviado = false";
         Connection conexion = establecerConexion();
         try{
             PreparedStatement ps = conexion.prepareStatement(sql);
